@@ -8,7 +8,7 @@ const List = () => {
       <UserInfo></UserInfo>
       <ChatList></ChatList>
     </div>
-  )
-}
+  );
+};
 
 export default List;
