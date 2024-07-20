@@ -3,11 +3,13 @@ import { useChatStore } from "../../lib/chatStore";
 import { auth, db } from "../../lib/firebase";
 import { useUserStore } from "../../lib/userStore";
 import "./detail.css";
+import { useLangStore } from "../../lib/langStore";
 
 const Detail = () => {
   const { chatId, user, isCurrentUserBlocked, isReceiverBlocked, changeBlock } =
     useChatStore();
   const { currentUser } = useUserStore();
+  const { translation, changeLang } = useLangStore();
 
   const handleBlock = async () => {
     if (!user) {
@@ -24,6 +26,10 @@ const Detail = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleLanguage = (e) => {
+    changeLang(e.target.value);
   };
 
   return (
@@ -48,51 +54,22 @@ const Detail = () => {
         </div>
         <div className="option">
           <div className="title">
-            <span>Shared Photos</span>
+            <span>Translation Language</span>
             <img src="./arrowDown.png" alt="" />
           </div>
-          <div className="photos">
-            <div className="photoItem">
-              <div className="photoDetail">
-                <img
-                  src="https://images.pexels.com/photos/25435588/pexels-photo-25435588/free-photo-of-a-close-up-of-pink-roses-in-a-garden.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                  alt=""
-                />
-                <span>photo_2024_2.png</span>
-              </div>
-              <img src="./download.png" alt="" />
-            </div>
-            <div className="photoItem">
-              <div className="photoDetail">
-                <img
-                  src="https://images.pexels.com/photos/25435588/pexels-photo-25435588/free-photo-of-a-close-up-of-pink-roses-in-a-garden.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                  alt=""
-                />
-                <span>photo_2024_2.png</span>
-              </div>
-              <img src="./download.png" alt="" />
-            </div>
-            <div className="photoItem">
-              <div className="photoDetail">
-                <img
-                  src="https://images.pexels.com/photos/25435588/pexels-photo-25435588/free-photo-of-a-close-up-of-pink-roses-in-a-garden.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                  alt=""
-                />
-                <span>photo_2024_2.png</span>
-              </div>
-              <img src="./download.png" alt="" />
-            </div>
-            <div className="photoItem">
-              <div className="photoDetail">
-                <img
-                  src="https://images.pexels.com/photos/25435588/pexels-photo-25435588/free-photo-of-a-close-up-of-pink-roses-in-a-garden.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                  alt=""
-                />
-                <span>photo_2024_2.png</span>
-              </div>
-              <img src="./download.png" alt="" />
-            </div>
-          </div>
+          <select
+            name="language"
+            className="language"
+            onChange={handleLanguage}
+          >
+            <option value="hi">Hindi</option>
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="de">German</option>
+            <option value="fr">French</option>
+          </select>
+          <label>Translated Text:</label>
+          <p>{translation}</p>
         </div>
         <div className="option">
           <div className="title">
